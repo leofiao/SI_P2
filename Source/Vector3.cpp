@@ -32,12 +32,21 @@ void Vector3::scale(real s) { x*=s; y*=s; z*=s; }
 void Vector3::normalize() { real len = ::sqrt(dot()); x/=len; y/=len; z/=len; }
 
 //Operators
+Vector3 operator -(const Vector3 &a) {
+    return Vector3(-a.x, -a.y, -a.z);
+}
+
 Vector3 operator +(const Vector3 &a, const Vector3 &b) {
     return Vector3(a.x+b.x, a.y+b.y, a.z+b.z);
 }
 
 Vector3 operator -(const Vector3 &a, const Vector3 &b) {
     return Vector3(a.x-b.x, a.y-b.y, a.z-b.z);
+}
+
+Vector3 operator *(const Vector3 &a, real s)
+{
+    return Vector3(a.x*s, a.y*s, a.z*s);
 }
 
 Vector3& operator +=(Vector3 &a, const Vector3 &b)
@@ -48,11 +57,18 @@ Vector3& operator +=(Vector3 &a, const Vector3 &b)
     return a;
 }
 
-Vector3 operator *(const Vector3 &a, real s)
+Vector3& operator -=(Vector3 &a, const Vector3 &b)
 {
-    return Vector3(a.x*s, a.y*s, a.z*s);
+    a.x -= b.x;
+    a.y -= b.y;
+    a.z -= b.z;
+    return a;
 }
 
-Vector3 operator -(const Vector3 &a) {
-    return Vector3(-a.x, -a.y, -a.z);
+Vector3& operator *=(Vector3 &a, real s)
+{
+    a.x *= s; a.y *= s; a.z *= s;
+    return a;
 }
+
+

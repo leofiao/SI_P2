@@ -83,6 +83,31 @@ void Transform::setDiagonal(real sx, real sy, real sz, real sw)
     _m[3][3] = sw;
 }
 
+
+// row vector multiplication by matrix (same as column multiplication by matrix transpose)
+Vector3 operator *(const Vector3 &v, const Transform &t)
+{
+    real w = t._m[0][3] * v.x + t._m[1][3] * v.y + t._m[2][3] * v.z + t._m[3][3];
+    Vector3 res(t._m[0][0] * v.x + t._m[1][0] * v.y + t._m[2][0] * v.z + t._m[3][0],
+                t._m[0][1] * v.x + t._m[1][1] * v.y + t._m[2][1] * v.z + t._m[3][1],
+                t._m[0][2] * v.x + t._m[1][2] * v.y + t._m[2][2] * v.z + t._m[3][2]);
+    
+    res *= (1/w);
+    return res;
+}
+
+// Matrix by column vector multiplication
+Vector3 operator *(const Transform &t, const Vector3 &v)
+{
+    real w = t._m[3][0] * v.x + t._m[3][1] * v.y + t._m[3][2] * v.z + t._m[3][3];
+    Vector3 res(t._m[0][0] * v.x + t._m[0][1] * v.y + t._m[0][2] * v.z + t._m[0][3],
+                t._m[1][0] * v.x + t._m[1][1] * v.y + t._m[1][2] * v.z + t._m[1][3],
+                t._m[2][0] * v.x + t._m[2][1] * v.y + t._m[2][2] * v.z + t._m[2][3]);
+    
+    res *= (1/w);
+    return res;
+}
+
 void Transform::postMultiply(const Transform &t)
 {
     real m00 = _m[0][0], m01 = _m[0][1], m02 = _m[0][2], m03 = _m[0][3];

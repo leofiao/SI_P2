@@ -12,12 +12,16 @@
 #include <iostream>
 
 #include "Vector3.h"
+#include "TransformSeq.h"
 
 class Ray {
 public:
     Ray(const Vector3 &o, const Vector3 &d);
     virtual ~Ray();
   
+    Ray worldToLocal(const TransformSeq &ts) const;
+    Ray localToWorld(const TransformSeq &ts) const;
+    
     Vector3 _o, _d;
 };
 

@@ -12,6 +12,8 @@
 #include <iostream>
 
 #include "defines.h"
+#include "Vector3.h"
+
 
 class Transform {
 public:
@@ -43,7 +45,14 @@ public:
     void postMultiply(const Transform &t);
     void preMultiply(const Transform &t);
     
+    
     real _m[4][4];
 };
+
+// row vector multiplication by matrix (same as column multiplication by matrix transpose)
+Vector3 operator *(const Vector3 &v, const Transform &t);
+
+// Matrix bby column vector multiplication
+Vector3 operator *(const Transform &t, const Vector3 &v);
 
 #endif /* defined(__RayTracer__Transform__) */

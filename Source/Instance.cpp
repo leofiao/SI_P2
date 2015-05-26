@@ -13,9 +13,12 @@
 bool Instance::intersects(const Ray &r, real &t)
 {
     // Transform the ray to the local coordinate system
+    Ray rl = r.worldToLocal(this->_t);
     
     // Compute intersection
+    // TODO:
     
     // Transform the ray back to world
+    // TODO:
     return false;
 }
