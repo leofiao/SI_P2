@@ -9,15 +9,15 @@
 
 #include "Sphere.h"
 
-Sphere::Sphere(const Vector3 &c, real r):_c(c), _r(r) {}
+Sphere::Sphere(const Vector3 &c, real r):c(c), r(r) {}
 Sphere::~Sphere() {}
 
-bool Sphere::intersects(const Ray &r, real &t)
+bool Sphere::intersects(const Ray &ray, real &t, HitRecord &hr) const
 {
     // compute a, b and c coefficients
-    real a = r._d.dot();                // a=d.d
-    real b = 2 * r._d.dot(r._o);        // b=2(d.o)
-    real c = r._o.dot() - _r*_r;        // c=o.o-r*r
+    real a = ray.d.dot();                // a=d.d
+    real b = 2 * ray.d.dot(ray.o);        // b=2(d.o)
+    real c = ray.o.dot() - r*r;        // c=o.o-r*r
     
     // compute discriminant
     real disc = b*b-4*a*c;
@@ -45,6 +45,9 @@ bool Sphere::intersects(const Ray &r, real &t)
     // returns first intersection
     if(t0<0)    t=t1;
     else        t=t0;
+    
+    hr.p = ray.o + ray.d * t;
+    hr.n = hr.p;
     
     return true;
 }

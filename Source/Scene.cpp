@@ -8,6 +8,10 @@
 
 #include "Scene.h"
 
+void Scene::setBackground(const Color &background)
+{
+    this->background = background;
+}
 
 void Scene::addInstance(Instance *obj)
 {
@@ -22,23 +26,28 @@ void Scene::addLight(Light *light)
 Color Scene::traceRay(const Ray &r)
 {
     double tmin = INFINITE;
-    Instance *obj = NULL;
-    
+    Instance *obj=NULL;
+    HitRecord hitrec;
     // process each primitive instace
     for(std::vector<Instance *>::iterator it=instances.begin(); it!=instances.end(); it++)
     {
-        real t; Instance *ins = *it;
-        if(ins->intersects(r, t)) {
+        HitRecord hr;
+        real t=INFINITE; Instance *ins = *it;
+        if(ins->intersects(r, t, hr)) {
             if(t < tmin) {
                 tmin = t;
                 obj = ins;
+                hitrec = hr;
             }
         }
     }
     
     if(tmin!=INFINITE) // We have a hit
     {
-        return Color(obj->_m._kd);
+        Vector3 l = lights[0]->sampleLight(hitrec.p);
+        real dot = MAX(0,hitrec.n.dot(l));
+        
+        return obj->m.kd * dot + obj->m.ka;
     }
-    return Color::black;
+    return background;
 }

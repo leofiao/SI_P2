@@ -15,16 +15,18 @@
 #include "TransformSeq.h"
 #include "Material.h"
 
+
+
 class Instance {
 public:
-    Instance(const Primitive *p): _p(p), _t(), _m() {}; // Default constructors
-    Instance(const Primitive *p, const TransformSeq &t, const Material &m): _p(p), _t(t), _m(m) {};
+    Instance(const Primitive *p): p(p), t(), m() {}; // Default constructors
+    Instance(const Primitive *p, const TransformSeq &t, const Material &m): p(p), t(t), m(m) {};
     virtual ~Instance() {};
     
-    bool intersects(const Ray &r, real &t);
+    bool intersects(const Ray &r, real &t, HitRecord &hr);
     
-    const Primitive *_p;    // The primitive
-    TransformSeq _t;         // The transformation applied to the primite to create the instace
-    Material _m;            // The material assigned to the primitive
+    const Primitive *p;    // The primitive
+    TransformSeq t;         // The transformation applied to the primite to create the instace
+    Material m;            // The material assigned to the primitive
 };
 #endif /* defined(__RayTracer__Instance__) */

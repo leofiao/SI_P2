@@ -8,17 +8,21 @@
 
 #include "Instance.h"
 
+// TODO: This method should probably return in (in-out) parameter,
+// a record with some relevant information regarding the hit (Position, Normal, ...)
 
-
-bool Instance::intersects(const Ray &r, real &t)
+bool Instance::intersects(const Ray &r, real &t, HitRecord &hr)
 {
+    HitRecord hrlocal;
+    
     // Transform the ray to the local coordinate system
-    Ray rl = r.worldToLocal(this->_t);
+    Ray rl = r.worldToLocal(this->t);
     
-    // Compute intersection
-    // TODO:
+    // Compute intersection in primitive local space
+    bool hit = this->p->intersects(rl, t, hrlocal);
     
-    // Transform the ray back to world
-    // TODO:
-    return false;
+    // Transform hit record (position and normal) back to world
+    if(hit)
+        hr = hrlocal.localToWorld(this->t);
+    return hit;
 }

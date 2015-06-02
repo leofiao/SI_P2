@@ -23,9 +23,12 @@ public:
     Color(real r,real g,real b);
     virtual ~Color();
     
-    real _r, _g, _b;
+    real r, g, b;
 };
 
-Color& operator +=(Color &a, const Color &b);
+Color operator +(const Color &c1, const Color &c2);
+Color& operator +=(Color &c1, const Color &c2);
+Color operator *(const Color &c, real f);
+Color& operator *=(Color &c, real f);
 
 #endif /* defined(__RayTracer__RGB__) */

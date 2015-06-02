@@ -15,7 +15,7 @@
 
 class TransformSeq {
 public:
-    TransformSeq() : _t(1.), _tinv(1.) {};
+    TransformSeq() : t(1.), tinv(1.) {};
     virtual ~TransformSeq() {};
     
     void addTranslation(real tx, real ty, real tz);
@@ -23,9 +23,18 @@ public:
     void addRotx(real angle);
     void addRoty(real angle);
     void addRotz(real angle);
+    
+    Vector3 applyToPoint(const Vector3 &v) const;
+    Vector3 applyToVector(const Vector3 &v) const;
+    Vector3 applyToNormal(const Vector3 &v) const;
+
+    Vector3 applyInverseToPoint(const Vector3 &v) const;
+    Vector3 applyInverseToVector(const Vector3 &v) const;
+    Vector3 applyInverseToNormal(const Vector3 &v) const;
+    
 public:
-    Transform _t;
-    Transform _tinv;
+    Transform t;
+    Transform tinv;
     
 private:
     void applyFromParts(const Transform &t, const Transform &tinv);

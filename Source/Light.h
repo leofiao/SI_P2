@@ -35,7 +35,7 @@ public:
     PointLight(const Vector3 &pos, const Color &col) : Light(col), _pos(pos) {};
     virtual ~PointLight() {};
     
-    virtual Vector3 sampleLight(const Vector3 &from) const { return _pos - from; }
+    virtual Vector3 sampleLight(const Vector3 &from) const { return (_pos - from).normalize(); }
     
 public:
     Vector3 _pos;

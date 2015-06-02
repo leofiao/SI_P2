@@ -18,15 +18,17 @@
 class Scene {
     
 public:
-    Scene() {};
-    virtual ~Scene() {};
+    Scene() : background(0,0,0) {};
+    virtual ~Scene()  {};
     
     virtual void addInstance(Instance *obj);
     virtual void addLight(Light *light);
     
+    void setBackground(const Color &background);
     Color traceRay(const Ray &r);
     
     // data members
+    Color background;
     std::vector<Instance *> instances;
     std::vector<Light *> lights;
 };

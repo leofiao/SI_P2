@@ -29,7 +29,7 @@ Vector3 Vector3::cross(const Vector3 &other) const
 
 // Modifiers
 void Vector3::scale(real s) { x*=s; y*=s; z*=s; }
-void Vector3::normalize() { real len = ::sqrt(dot()); x/=len; y/=len; z/=len; }
+Vector3& Vector3::normalize() { real len = ::sqrt(dot()); x/=len; y/=len; z/=len; return *this;}
 
 //Operators
 Vector3 operator -(const Vector3 &a) {

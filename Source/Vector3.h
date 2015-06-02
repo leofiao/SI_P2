@@ -28,7 +28,7 @@ public:
     
     // modifiers
     void scale(real s);
-    void normalize();
+    Vector3& normalize();
     
     union {
         struct { real  x, y, z; };

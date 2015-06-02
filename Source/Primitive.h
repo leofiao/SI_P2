@@ -13,6 +13,7 @@
 
 #include "Ray.h"
 #include "Color.h"
+#include "HitRecord.h"
 
 class Primitive {
 
@@ -20,7 +21,7 @@ public:
     Primitive();
     virtual ~Primitive();
     
-    virtual bool intersects(const Ray &r, real &t) = 0;
+    virtual bool intersects(const Ray &r, real &t, HitRecord &hr) const = 0;
 };
 
 #endif /* defined(__RayTracer__Primitive__) */

@@ -22,19 +22,19 @@ public:
     ImageSensor(int width, int height);
     virtual ~ImageSensor();
     
-    virtual void addSample(size_t i, size_t j, Color c);
-    virtual void dumpRawData(const char *filename);
+    virtual void addSample(unsigned int i, unsigned int j, Color c);
+    virtual void dumpToTGA(const char *filename) const;
     
     virtual void process() = 0;
     
 private:
     void allocateStorage();
     void deallocateStorage();
-    size_t indexFor(size_t i, size_t j) const;
+    unsigned int indexFor(unsigned int i, unsigned int j) const;
     
 public:
 
-    int _w, _h; // Image resolution
+    int w, h; // Image resolution
     Color *data;
 };
 #endif /* defined(__RayTracer__ImageSensor__) */

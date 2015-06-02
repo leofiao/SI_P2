@@ -18,11 +18,11 @@ class Sphere : public Primitive {
 public:
     Sphere(const Vector3& c=Vector3(0,0,0), real r=1.0);
     virtual ~Sphere();
-    virtual bool intersects(const Ray &r, real &t);
+    virtual bool intersects(const Ray &r, real &t, HitRecord &hr) const;
 
 public:
-    Vector3 _c;
-    real _r;
+    Vector3 c;
+    real r;
 };
 
 #endif /* defined(__RayTracer__Sphere__) */

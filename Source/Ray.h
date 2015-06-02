@@ -20,9 +20,8 @@ public:
     virtual ~Ray();
   
     Ray worldToLocal(const TransformSeq &ts) const;
-    Ray localToWorld(const TransformSeq &ts) const;
     
-    Vector3 _o, _d;
+    Vector3 o, d;
 };
 
 #endif /* defined(__RayTracer__Ray__) */

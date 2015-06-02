@@ -12,4 +12,7 @@
 typedef float real;
 const real INFINITE=1e30;
 
+#define MAX(a,b)    ((a)>(b)?(a):(b))
+#define MIN(a,b)    ((a)<(b)?(a):(b))
+
 #endif

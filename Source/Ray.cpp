@@ -9,7 +9,7 @@
 #include "Ray.h"
 #include "TransformSeq.h"
 
-Ray::Ray(const Vector3 &o, const Vector3 &d): _o(o), _d(d)
+Ray::Ray(const Vector3 &o, const Vector3 &d): o(o), d(d)
 {
 }
 
@@ -20,19 +20,10 @@ Ray::~Ray()
 Ray Ray::worldToLocal(const TransformSeq &ts) const
 {
     // Use inverse transformation to go from world to local
-    Vector3 o = ts._tinv * this->_o;
-    Vector3 d = this->_d * ts._t;
-    d.normalize();
-    
-    return Ray(o,d);
-}
+    //    Vector3 ori = ts.tinv.applyToPoint(this->o);
+    //    Vector3 dir = ts.tinv.applyToVector(this->d);
+    Vector3 ori = ts.applyInverseToPoint(this->o);
+    Vector3 dir = ts.applyInverseToVector(this->d);
 
-Ray Ray::localToWorld(const TransformSeq &ts) const
-{
-    // Use direct transformation to go from local to world
-    Vector3 o = ts._t * this->_o;
-    Vector3 d = this->_d * ts._tinv;
-    d.normalize();
-    
-    return Ray(o,d);
+    return Ray(ori,dir);
 }

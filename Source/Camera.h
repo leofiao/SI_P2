@@ -30,18 +30,18 @@ private:
     void setupAxis();   // sets up the camera coordinate axis
 
 public:
-    Vector3 _eye;       // camera origin
-    Vector3 _at;        // target
-    Vector3 _up;        // up vector
-    real _fd;       // focal distance
-    real _width;    // real image width
-    real _height;   // real image height
+    Vector3 eye;       // camera origin
+    Vector3 at;        // target
+    Vector3 up;        // up vector
+    real fd;       // focal distance
+    real width;    // real image width
+    real height;   // real image height
     
     ImageSensor *sensor;
 
-    Vector3 _ez;    // Forward direction
-    Vector3 _ey;    // Up direction
-    Vector3 _ex;    // Left direction
+    Vector3 ez;    // Forward direction
+    Vector3 ey;    // Up direction
+    Vector3 ex;    // Left direction
 };
 
 #endif /* defined(__RayTracer__Camera__) */

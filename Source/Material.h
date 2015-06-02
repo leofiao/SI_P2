@@ -18,13 +18,13 @@
 class Material {
 
 public:
-    Material() : _ka(), _kd(), _ks(1.0, 1.0, 1.0), _kt(0.0, 0.0, 0.0), _ns(0.0), _nt(1.0) {};
+    Material() : ka(), kd(), ks(1.0, 1.0, 1.0), kt(0.0, 0.0, 0.0), ns(0.0), nt(1.0) {};
     Material(const Color &ka, const Color &kd, const Color &ks = Color(1.0, 1.0, 1.0), const Color &kt=Color(0.0, 0.0, 0.0), int ns=0, int nt=1):
-        _ka(ka), _kd(kd), _ks(ks), _kt(kt), _ns(ns), _nt(nt) {};
+        ka(ka), kd(kd), ks(ks), kt(kt), ns(ns), nt(nt) {};
     virtual ~Material() {};
     
 public:
-    Color _ka, _kd, _ks, _kt;
-    int _ns, _nt;
+    Color ka, kd, ks, kt;
+    int ns, nt;
 };
 #endif /* defined(__RayTracer__Material__) */
