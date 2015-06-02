@@ -49,6 +49,11 @@ Vector3 operator *(const Vector3 &a, real s)
     return Vector3(a.x*s, a.y*s, a.z*s);
 }
 
+Vector3 operator /(const Vector3 &a, real s)
+{
+	return Vector3(a.x/s, a.y/s, a.z/s);
+}
+
 Vector3& operator +=(Vector3 &a, const Vector3 &b)
 {
     a.x += b.x;
