@@ -67,6 +67,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\defines.h" />
+    <ClInclude Include="Source\HitRecord.h" />
     <ClInclude Include="Source\ImageSensor.h" />
     <ClInclude Include="Source\Instance.h" />
     <ClInclude Include="Source\Light.h" />
@@ -83,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Color.cpp" />
+    <ClCompile Include="Source\HitRecord.cpp" />
     <ClCompile Include="Source\ImageSensor.cpp" />
     <ClCompile Include="Source\Instance.cpp" />
     <ClCompile Include="Source\Light.cpp" />
