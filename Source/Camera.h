@@ -10,6 +10,7 @@
 #define __RayTracer__Camera__
 
 #include <iostream>
+#include <math.h> 
 
 #include "Vector3.h"
 #include "Ray.h"

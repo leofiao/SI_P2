@@ -2,6 +2,8 @@
 #define __RayTracer__Cube__
 
 #include <iostream>
+#include <cfloat>
+#include <math.h>
 #include "Primitive.h"
 
 class Cube : public Primitive {
