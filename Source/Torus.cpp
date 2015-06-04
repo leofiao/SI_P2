@@ -46,7 +46,7 @@ bool Torus::intersects(const Ray &ray, real &t, HitRecord &hr) const
 		}
 	}
 
-	if (temp_t == FLT_MIN)
+	if (temp_t == FLT_MAX)
 		return false;
 
 	t = temp_t;

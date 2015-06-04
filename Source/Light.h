@@ -15,40 +15,53 @@
 #include "Vector3.h"
 
 class Light {
-  
-public:
-    Light(): _col(1.0, 1.0, 1.0) {};
-    Light(const Color &col) : _col(col) {};
-    virtual ~Light() {};
 
-    virtual Vector3 sampleLight(const Vector3 &from) const = 0; // Returns a direction to look for the light
-    
 public:
-    Color _col;
+	Light() : _col(1.0, 1.0, 1.0) {};
+	Light(const Color &col) : _col(col) {};
+	virtual ~Light() {};
+
+	virtual Vector3 sampleLight(const Vector3 &from) const = 0; // Returns a direction to look for the light
+
+public:
+	Color _col;
 
 };
 
 class PointLight : public Light {
 public:
-    PointLight() : Light(), _pos() { };
-    PointLight(const Vector3 &pos) : Light(), _pos(pos) {};
-    PointLight(const Vector3 &pos, const Color &col) : Light(col), _pos(pos) {};
-    virtual ~PointLight() {};
-    
-    virtual Vector3 sampleLight(const Vector3 &from) const { return (_pos - from).normalize(); }
-    
+	PointLight() : Light(), _pos() { };
+	PointLight(const Vector3 &pos) : Light(), _pos(pos) {};
+	PointLight(const Vector3 &pos, const Color &col) : Light(col), _pos(pos) {};
+	virtual ~PointLight() {};
+
+	virtual Vector3 sampleLight(const Vector3 &from) const { return (_pos - from).normalize(); }
+
 public:
-    Vector3 _pos;
+	Vector3 _pos;
 };
 
 class DirectionalLight : public Light {
 public:
-    DirectionalLight(): Light(), _dir() {};
-    DirectionalLight(const Vector3 &dir) : Light(), _dir(dir) {};
-    virtual ~DirectionalLight() {};
-    
-    virtual Vector3 sampleLight(const Vector3 &from) const { return - _dir; }
+	DirectionalLight() : Light(), _dir() {};
+	DirectionalLight(const Vector3 &dir) : Light(), _dir(dir) {};
+	virtual ~DirectionalLight() {};
+
+	virtual Vector3 sampleLight(const Vector3 &from) const { return -_dir; }
 public:
-    Vector3 _dir;
+	Vector3 _dir;
 };
+
+class AreaLight : public Light {
+public:
+	AreaLight() : Light(), _dir() {};
+	AreaLight(const Vector3 &dir) : Light(), _dir(dir) {};
+	virtual ~AreaLight() {};
+
+	virtual Vector3 sampleLight(const Vector3 &from) const { return -_dir; }
+public:
+	Vector3 _dir;
+	Vector3 points[4];
+};
+
 #endif /* defined(__RayTracer__Light__) */
