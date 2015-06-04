@@ -8,36 +8,41 @@
 
 #include "Color.h"
 
-Color::Color():r(0),g(0),b(0) {}
-Color::Color(real r, real g, real b):r(r), g(g), b(b) {};
+Color::Color() :r(0), g(0), b(0) {}
+Color::Color(real r, real g, real b) : r(r), g(g), b(b) {};
 Color::~Color() {};
 
 Color operator +(const Color &c1, const Color &c2)
 {
-    return Color(c1.r+c2.r, c1.g+c2.g, c1.b+c2.b);
+	return Color(c1.r + c2.r, c1.g + c2.g, c1.b + c2.b);
 }
 
 Color& operator +=(Color &c1, const Color &c2)
 {
-    c1.r += c2.r;
-    c1.g += c2.g;
-    c1.b += c2.b;
-    
-    return c1;
+	c1.r += c2.r;
+	c1.g += c2.g;
+	c1.b += c2.b;
+
+	return c1;
+}
+
+Color operator -(const Color &c1, const Color &c2)
+{
+	return Color(abs(c1.r - c2.r), abs(c1.g - c2.g), abs(c1.b - c2.b));
 }
 
 Color operator *(const Color &c, real f)
 {
-    return Color(c.r * f, c.g * f, c.b * f);
+	return Color(c.r * f, c.g * f, c.b * f);
 }
 
 Color& operator *=(Color &c, real f)
 {
-    c.r *= f;
-    c.g *= f;
-    c.b *= f;
-    
-    return c;
+	c.r *= f;
+	c.g *= f;
+	c.b *= f;
+
+	return c;
 }
 
 Color operator /(const Color &c, real f)
@@ -46,4 +51,4 @@ Color operator /(const Color &c, real f)
 }
 
 
-Color Color::black(0,0,0);
+Color Color::black(0, 0, 0);

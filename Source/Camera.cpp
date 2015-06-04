@@ -58,57 +58,13 @@ void Camera::capture(Scene &s)
 	for (unsigned int j = 0; j < sensor->h; j++) {
 		for (unsigned int i = 0; i < sensor->w; i++) {
 
-			/*
-			Mais dois fors, para passar mais raios por cada pixel
-			Necessario manter valor da cor para ir comparando
-			*/
-			//for (unsigned int aaX = 0; aaX < aaDepth; aaX++) {
-				//aaDx = Vector3(dx / pow(2, aaX));
+			Vector3 to = pixel - eye;
+			to.normalize();
+			Ray r(eye, to);
+			Color centerColor = s.traceRay(r);
 
-				//for (unsigned int aaY = 0; aaY < aaDepth; aaY++) {
-					//aaDy = Vector3(dy / pow(2, aaY));
-
-					//fica assim por agora, ate implementar o AA adaptativo
-					aaDx = dx;
-					aaDy = dy;
-
-					Vector3 to = pixel - eye;
-					to.normalize();
-					Ray r(eye, to);
-					Color centerColor = s.traceRay(r);
-
-
-					Vector3 tl = (pixel - aaDx / 2 + aaDy / 2);
-					Vector3 to_tl = tl - eye;
-					to_tl.normalize();
-					Ray rtl(eye, to_tl);
-					Color ctl = s.traceRay(rtl);
-
-					Vector3 tr(pixel + aaDx / 2 + aaDy / 2);
-					Vector3 to_tr = tr - eye;
-					to_tr.normalize();
-					Ray rtr(eye, to_tr);
-					Color ctr = s.traceRay(rtr);
-
-					Vector3 bl(pixel - aaDx / 2 - aaDy / 2);
-					Vector3 to_bl = bl - eye;
-					to_bl.normalize();
-					Ray rbl(eye, to_bl);
-					Color cbl = s.traceRay(rbl);
-
-					Vector3 br(pixel + aaDx / 2 - aaDy / 2);
-					Vector3 to_br = br - eye;
-					to_br.normalize();
-					Ray rbr(eye, to_br);
-					Color cbr = s.traceRay(rbr);
-
-					Color averageColor = (ctl + ctr + cbl + cbr) / 4;
-					sensor->addSample(i, j, averageColor);
-
-					//std::cout << averageColor.r << ", " << averageColor.g << ", " << averageColor.b << std::endl;
-
-				//} //end aaY
-			//} //end aaX
+			Color averageColor = (calcAverageColor(s, pixel, dx, dy) + centerColor) / 2;
+			sensor->addSample(i, j, averageColor);
 
 			pixel += dx;
 		}
@@ -117,6 +73,69 @@ void Camera::capture(Scene &s)
 	}
 
 	this->sensor->dumpToTGA("image.tga");
+}
+
+Color Camera::calcAverageColor(Scene &s, Vector3 pixel, Vector3 dx, Vector3 dy) {
+
+	//Canto superior esquerdo
+	Vector3 tl = (pixel - dx / 2 + dy / 2);
+	Vector3 to_tl = tl - eye;
+	to_tl.normalize();
+	Ray rtl(eye, to_tl);
+	Color ctl = s.traceRay(rtl);
+
+	//Canto superior direito
+	Vector3 tr(pixel + dx / 2 + dy / 2);
+	Vector3 to_tr = tr - eye;
+	to_tr.normalize();
+	Ray rtr(eye, to_tr);
+	Color ctr = s.traceRay(rtr);
+
+	//Canto inferior esquero
+	Vector3 bl(pixel - dx / 2 - dy / 2);
+	Vector3 to_bl = bl - eye;
+	to_bl.normalize();
+	Ray rbl(eye, to_bl);
+	Color cbl = s.traceRay(rbl);
+
+	//Canto inferior direito
+	Vector3 br(pixel + dx / 2 - dy / 2);
+	Vector3 to_br = br - eye;
+	to_br.normalize();
+	Ray rbr(eye, to_br);
+	Color cbr = s.traceRay(rbr);
+
+	//Topo
+	Vector3 tm(pixel + dy / 2);
+	Vector3 to_tm = tm - eye;
+	to_tm.normalize();
+	Ray rtm(eye, to_tm);
+	Color ctm = s.traceRay(rtm);
+
+	//Meio direito
+	Vector3 rm(pixel + dx / 2);
+	Vector3 to_rm = rm - eye;
+	to_rm.normalize();
+	Ray rrm(eye, to_rm);
+	Color crm = s.traceRay(rrm);
+
+	//Meio baixo
+	Vector3 bm(pixel - dy / 2);
+	Vector3 to_bm = bm - eye;
+	to_bm.normalize();
+	Ray rbm(eye, to_bm);
+	Color cbm = s.traceRay(rbm);
+
+	//Meio esquerda
+	Vector3 lm(pixel - dx / 2);
+	Vector3 to_lm = lm - eye;
+	to_lm.normalize();
+	Ray rlm(eye, to_lm);
+	Color clm = s.traceRay(rlm);
+
+	Color averageColor = (ctl + ctr + cbl + cbr + ctm + crm + cbm + clm) / 8;
+
+	return averageColor;
 }
 
 void Camera::setupAxis()
