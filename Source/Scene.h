@@ -27,6 +27,7 @@ public:
     
     void setBackground(const Color &background);
     Color traceRay(const Ray &r);
+	bool compareColor(Color rColor);
 	//Ray refraction(Ray &ray, hit_rec h_r, double &R, bool _bump);
     
     // data members
