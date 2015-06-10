@@ -33,6 +33,7 @@ Color operator *(const Color &c, real f);
 Color operator *(const Color &c, Color f);
 Color& operator *=(Color &c, real f);
 Color operator /(const Color &c, real f);
+Color operator !=(const Color &c, const Color &c2);
 
 
 #endif /* defined(__RayTracer__RGB__) */
