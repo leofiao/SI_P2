@@ -30,6 +30,7 @@ Color operator +(const Color &c1, const Color &c2);
 Color& operator +=(Color &c1, const Color &c2);
 Color operator -(const Color &c1, const Color &c2);
 Color operator *(const Color &c, real f);
+Color operator *(const Color &c, Color f);
 Color& operator *=(Color &c, real f);
 Color operator /(const Color &c, real f);
 

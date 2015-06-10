@@ -36,6 +36,11 @@ Color operator *(const Color &c, real f)
 	return Color(c.r * f, c.g * f, c.b * f);
 }
 
+Color operator *(const Color &c, Color f)
+{
+	return Color(c.r * f.r, c.g * f.g, c.b * f.b);
+}
+
 Color& operator *=(Color &c, real f)
 {
 	c.r *= f;
