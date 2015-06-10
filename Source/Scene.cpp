@@ -67,27 +67,15 @@ Color Scene::traceRay(const Ray &r)
 				real specAngle = MAX(hitrec.n.dot(halfDir), 0.0); //N.H
 				specularDot = pow(specAngle, 16.0); //(N.H)^n
 			}
-
-
-
 			finalColor += obj->m.kd * diffuseDot + obj->m.ks * specularDot;
-
 		}
-
-
 
 		//Verificar se o raio que sai de hitrec.p até à fonte de luz intersecta outro objeto
 		//Samplelight pode retornar um ray (origem e direcçao) para podermos saber a distancia entre a luz e  ponto de intersecao
 		//cena recebe esse raio, normaliza-o
 
 		//return obj->m.ka + finalColor            finalColor = obj->m.kd * dot + obj->m.ka
-
-
-
-
-
 		return  obj->m.ka + finalColor;
-
 	}
 
 	//Implementear shadows aqui
@@ -96,7 +84,6 @@ Color Scene::traceRay(const Ray &r)
 	a sua origem é hr.p e a sua direcçao é luz - intersecçao
 	*/
 	//Ray shadowRay(hitrec.p, );
-
 
 	return background;
 }
