@@ -48,11 +48,8 @@ void Camera::capture(Scene &s)
 	Vector3 dy = -ey * (height / sensor->h); // Vertical distance between pixels in image sensor
 	Vector3 pixel = topleft + dx * 0.5 - dy * .5;   // Center of the pixel
 
-	Vector3 aaDx = dx;
-	Vector3 aaDy = dy;
 	unsigned int aaDepth = 4; //How many times the pixels are going to be divided
 	double aaThreshold = 0.3; //The maximum difference allowed (???)
-	bool overThreshold = false;
 
 	Vector3 left = pixel;
 	for (unsigned int j = 0; j < sensor->h; j++) {
@@ -64,6 +61,8 @@ void Camera::capture(Scene &s)
 			Color centerColor = s.traceRay(r);
 
 			Color averageColor = (calcAverageColor(s, pixel, dx, dy) + centerColor) / 2;
+
+			//std::cout << averageColor.r << ", " << averageColor.g << ", " << averageColor.b << std::endl;
 			sensor->addSample(i, j, averageColor);
 
 			pixel += dx;

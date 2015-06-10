@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <vector>
+#include <math.h> //pow
 
 #include "Instance.h"
 #include "Light.h"

@@ -43,10 +43,10 @@ void testTorusScene() {
 
 
 	s.addInstance(new Instance(new Torus(), ts1, green));
-	s.addInstance(new Instance(new Plane(), ts2, blue));
+	//s.addInstance(new Instance(new Plane(), ts2, blue));
 
 	s.addLight(new PointLight(Vector3(0, 10, 10)));
-	//s.addLight(new PointLight(Vector3(0, 10, 10)));
+	//s.addLight(new DirectionalLight(Vector3(0, 10, 10)));
 	//s.addLight(new DirectionalLight(Vector3(0.0, -1.0, 0.0)));
 
 	s.setBackground(Color(0.7, 0.7, 0.7));
