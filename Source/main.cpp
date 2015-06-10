@@ -30,7 +30,7 @@ void testTorusScene() {
 	Scene s;
 
 	Material green(Color(0.0, 0.2, 0.0), Color(0.0, 0.8, 0.0));
-	green.kt = Color(1.0, 1.0, 1.0);
+	//green.kt = Color(1.0, 1.0, 1.0);
 	green.nt = green.REFRACTION_ICE;
 	green.ni = 1.0;
 	Material blue(Color(0.0, 0.0, 0.4), Color(0.0, 0.0, 0.5));
@@ -49,14 +49,14 @@ void testTorusScene() {
 	//s.addInstance(new Instance(new Sphere(), ts1, green));
 	s.addInstance(new Instance(new Plane(), ts2, blue));
 
-	s.addLight(new PointLight(Vector3(0, 0, 10)));
-	//s.addLight(new DirectionalLight(Vector3(0, 10, 10)));
+	//s.addLight(new PointLight(Vector3(0, 0, 10)));
+	s.addLight(new DirectionalLight(Vector3(0, 0, 10)));
 	//s.addLight(new DirectionalLight(Vector3(0.0, -1.0, 0.0)));
 
 	s.setBackground(Color(0.7, 0.7, 0.7));
 
 	Camera cam(Vector3(0, 0, 10));
-	ImageSensor *is = new SimpleImageSensor(300, 200);
+	ImageSensor *is = new SimpleImageSensor(600, 400);
 
 	cam.setSensor(is);
 	cam.capture(s);

@@ -86,34 +86,43 @@ Color Scene::traceRay(const Ray &r)
 
 			//lightDir
 			//Verificar para a direcional, nao tem origem
-			Vector3 l = lights[i]->sampleLight(hitrec.p);
+			Vector3 l = lights[i]->sampleLight(hitrec.p).normalize();
 
 			//Calcular raio refractado
-			real cosI = -hitrec.n.dot(r.d);
 			Color refractedColor(1.0, 1.0, 1.0);
-
-
+			/*
+			real cosI = -hitrec.n.dot(r.d);
 			while (remainingRefractions > 0) {
-				if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0)
-					if (cosI > 0) {
-						real sinI = sqrt(1 - pow(cosI, 2));
-						Vector3 m = (hitrec.n * cosI - r.d) / sinI;
-						real sinT = (obj->m.ni * sinI) / obj->m.nt;
-						real cosT = sqrt(1 - pow(sinT, 2));
+			if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0)
+			if (cosI > 0) {
+			real sinI = sqrt(1 - pow(cosI, 2));
+			Vector3 m = (hitrec.n * cosI - r.d) / sinI;
+			real sinT = (obj->m.ni * sinI) / obj->m.nt;
 
-						Vector3 t = m * sinT - hitrec.n * cosT;
+			real n = obj->m.ni / obj->m.nt;
+			real sinT2 = n * n * (1.0 - cosI * cosI);
+			if (sinT2 > 1.0)
+			break; //Invalido
+			real cosT = sqrt(1 - sinT2);
+			Vector3 t = r.d* n + hitrec.n*(n * cosI - cosT);
 
-						Ray newRay(hitrec.p, t);
-						refractedColor += traceRefractionRay(newRay, newRay);
-					}
-					else {
-						Ray newRay(hitrec.p, r.d);
-						refractedColor += traceRefractionRay(newRay, newRay);
-					}
+			//Dos slides
+			//real cosT = sqrt(1 - pow(sinT, 2));
+			//Vector3 t = m * sinT - hitrec.n * cosT;
 
-					remainingRefractions--;
+			Ray newRay(hitrec.p, t);
+			refractedColor += traceRefractionRay(newRay, newRay);
+			}
+			else {
+			Ray newRay(hitrec.p, r.d);
+			refractedColor += traceRefractionRay(newRay, newRay);
+			}
+
+			remainingRefractions--;
 			}
 			refractedColor = refractedColor / 4;
+			*/
+
 			//Diffuse lighting
 			real diffuseDot = MAX(0, hitrec.n.normalize().dot(l));
 

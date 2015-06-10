@@ -35,7 +35,7 @@ public:
 	PointLight(const Vector3 &pos, const Color &col) : Light(col), _pos(pos) {};
 	virtual ~PointLight() {};
 
-	virtual Vector3 sampleLight(const Vector3 &from) const { return (_pos - from).normalize(); }
+	virtual Vector3 sampleLight(const Vector3 &from) const { return (_pos - from); }
 
 public:
 	Vector3 _pos;
@@ -47,7 +47,7 @@ public:
 	DirectionalLight(const Vector3 &dir) : Light(), _dir(dir) {};
 	virtual ~DirectionalLight() {};
 
-	virtual Vector3 sampleLight(const Vector3 &from) const { return -_dir; }
+	virtual Vector3 sampleLight(const Vector3 &from) const { return _dir - from; }
 public:
 	Vector3 _dir;
 };
