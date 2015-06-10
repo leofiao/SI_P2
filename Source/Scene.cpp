@@ -110,8 +110,10 @@ Color Scene::traceRay(const Ray &r)
 						Ray newRay(hitrec.p, r.d);
 						refractedColor += traceRefractionRay(newRay, newRay);
 					}
+
 					remainingRefractions--;
 			}
+			refractedColor = refractedColor / 4;
 			//Diffuse lighting
 			real diffuseDot = MAX(0, hitrec.n.normalize().dot(l));
 
@@ -141,8 +143,4 @@ Color Scene::traceRay(const Ray &r)
 	//Ray shadowRay(hitrec.p, );
 
 	return background;
-}
-
-bool Scene::compareColor(Color rColor){
-	return (background.g != rColor.g && background.r != rColor.r && background.b != rColor.b);
 }
