@@ -17,22 +17,23 @@
 #include "Light.h"
 
 class Scene {
-    
+
 public:
-    Scene() : background(0,0,0) {};
-    virtual ~Scene()  {};
-    
-    virtual void addInstance(Instance *obj);
-    virtual void addLight(Light *light);
-    
-    void setBackground(const Color &background);
-    Color traceRay(const Ray &r);
+	Scene() : background(0, 0, 0) {};
+	virtual ~Scene()  {};
+
+	virtual void addInstance(Instance *obj);
+	virtual void addLight(Light *light);
+
+	void setBackground(const Color &background);
+	Color traceRay(const Ray &r);
+	Color traceRefractionRay(Ray &newRay, Ray r);
 	//Ray refraction(Ray &ray, hit_rec h_r, double &R, bool _bump);
-    
-    // data members
-    Color background;
-    std::vector<Instance *> instances;
-    std::vector<Light *> lights;
+
+	// data members
+	Color background;
+	std::vector<Instance *> instances;
+	std::vector<Light *> lights;
 };
 
 #endif /* defined(__RayTracer__Scene__) */
