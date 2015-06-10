@@ -49,7 +49,7 @@ Color Scene::traceRay(const Ray &r)
 	{
 
 		Color finalColor(0, 0, 0);
-		int remainingRefractions = 20;
+		int remainingRefractions = 3;
 		for (int i = 0; i < lights.size(); i++) {
 
 			//lightDir
@@ -59,38 +59,50 @@ Color Scene::traceRay(const Ray &r)
 			//Calcular raio refractado
 			real cosI = -hitrec.n.dot(r.d);
 			Color refractedColor(1.0, 1.0, 1.0);
-			if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0 ){
-				//if (cosI > 0) {
-				real sinI = sqrt(1 - pow(cosI, 2));
-				Vector3 m = (hitrec.n * cosI - r.d) / sinI;
-				real sinT = (obj->m.ni * sinI) / obj->m.nt;
-				real cosT = sqrt(1 - pow(sinT, 2));
 
-				Vector3 t = m * sinT - hitrec.n * cosT;
-				refractedColor = traceRay(Ray(hitrec.p, t));
-				remainingRefractions--;
-				/*}
+			
+
+			if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0 && remainingRefractions > 0)
+				if (cosI > 0) {
+					real sinI = sqrt(1 - pow(cosI, 2));
+					Vector3 m = (hitrec.n * cosI - r.d) / sinI;
+					real sinT = (obj->m.ni * sinI) / obj->m.nt;
+					real cosT = sqrt(1 - pow(sinT, 2));
+
+					Vector3 t = m * sinT - hitrec.n * cosT;
+					refractedColor = traceRay(Ray(hitrec.p, t));
+					remainingRefractions--;
+				}
 				else {
-				refractedColor = traceRay(Ray(hitrec.p, r.d));
+					refractedColor = traceRay(Ray(hitrec.p, r.d));
+					remainingRefractions--;
+				}
+
+
+				/*
+				if (remainingRefractions > 0) {
 				remainingRefractions--;
-				}*/
-			}
-			//Diffuse lighting
-			real diffuseDot = MAX(0, hitrec.n.normalize().dot(l));
+				Ray rRay(hitrec.p, -hitrec.n);
+				refractedColor = this->traceRay(rRay);
+				}
+				*/
 
-			real specularDot = 0.0;
-			if (diffuseDot > 0.0) {
-				//Specular lighting
-				Vector3 viewDir = (-r.d).normalize();  //N      //correto???    v = ray.inverso
-				Vector3 halfDir = (l + viewDir).normalize(); //H
-				real specAngle = MAX(hitrec.n.dot(halfDir), 0.0); //N.H
-				specularDot = pow(specAngle, 64.0); //(N.H)^n
-			}
+				//Diffuse lighting
+				real diffuseDot = MAX(0, hitrec.n.normalize().dot(l));
+
+				real specularDot = 0.0;
+				if (diffuseDot > 0.0) {
+					//Specular lighting
+					Vector3 viewDir = (-r.d).normalize();  //N      //correto???    v = ray.inverso
+					Vector3 halfDir = (l + viewDir).normalize(); //H
+					real specAngle = MAX(hitrec.n.dot(halfDir), 0.0); //N.H
+					specularDot = pow(specAngle, 64.0); //(N.H)^n
+				}
 
 
 
 
-			finalColor += obj->m.kd * diffuseDot + obj->m.ks * specularDot + obj->m.kt*refractedColor;
+				finalColor += obj->m.kd * diffuseDot + obj->m.ks * specularDot + obj->m.kt*refractedColor;
 		}
 
 		//Verificar se o raio que sai de hitrec.p até à fonte de luz intersecta outro objeto

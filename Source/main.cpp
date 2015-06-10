@@ -30,7 +30,7 @@ void testTorusScene() {
 	Scene s;
 
 	Material green(Color(0.0, 0.2, 0.0), Color(0.0, 0.8, 0.0));
-	green.kt = Color(0.5, 0.5, 0.5);
+	green.kt = Color(0.8, 0.8, 0.8);
 	green.nt = green.REFRACTION_ICE;
 	green.ni = 1.0;
 	Material blue(Color(0.0, 0.0, 0.4), Color(0.0, 0.0, 0.5));
