@@ -17,6 +17,7 @@
 class Ray {
 public:
     Ray(const Vector3 &o, const Vector3 &d);
+	Ray();
     virtual ~Ray();
   
     Ray worldToLocal(const TransformSeq &ts) const;

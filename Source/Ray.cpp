@@ -13,6 +13,9 @@ Ray::Ray(const Vector3 &o, const Vector3 &d): o(o), d(d)
 {
 }
 
+Ray::Ray()
+{
+}
 Ray::~Ray()
 {
 }
