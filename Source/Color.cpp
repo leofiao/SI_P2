@@ -55,5 +55,8 @@ Color operator /(const Color &c, real f)
 	return Color(c.r / f, c.g / f, c.b / f);
 }
 
+bool operator !=(const Color &background, const Color &rColor){
+	return (background.g != rColor.g && background.r != rColor.r && background.b != rColor.b);
+}
 
 Color Color::black(0, 0, 0);

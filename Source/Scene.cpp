@@ -142,7 +142,3 @@ Color Scene::traceRay(const Ray &r)
 
 	return background;
 }
-
-bool Scene::compareColor(Color rColor){
-	return (background.g != rColor.g && background.r != rColor.r && background.b != rColor.b);
-}
