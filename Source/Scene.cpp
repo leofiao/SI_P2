@@ -76,52 +76,53 @@ Color Scene::traceRay(const Ray &r)
 		}
 	}
 
-	//Este if nao pode ficar assim, apenas calculamos a luz se o objeto nao estiver tapado por outro
 	if (tmin != INFINITE) // We have a hit
 	{
 
 		Color finalColor(0, 0, 0);
-		int remainingRefractions = 4;
+		int remainingRefractions = 5;
 		for (int i = 0; i < lights.size(); i++) {
 
 			//lightDir
-			//Verificar para a direcional, nao tem origem
 			Vector3 l = lights[i]->sampleLight(hitrec.p).normalize();
 
 			//Calcular raio refractado
-			Color refractedColor(1.0, 1.0, 1.0);
-			/*
+			Color refractedColor(0.0, 0.0, 0.0);
+
 			real cosI = -hitrec.n.dot(r.d);
 			while (remainingRefractions > 0) {
-			if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0)
-			if (cosI > 0) {
-			real sinI = sqrt(1 - pow(cosI, 2));
-			Vector3 m = (hitrec.n * cosI - r.d) / sinI;
-			real sinT = (obj->m.ni * sinI) / obj->m.nt;
+				if (obj->m.kt.r != 0.0 && obj->m.kt.g != 0.0 && obj->m.kt.b != 0.0)
+					if (cosI > 0) {
 
-			real n = obj->m.ni / obj->m.nt;
-			real sinT2 = n * n * (1.0 - cosI * cosI);
-			if (sinT2 > 1.0)
-			break; //Invalido
-			real cosT = sqrt(1 - sinT2);
-			Vector3 t = r.d* n + hitrec.n*(n * cosI - cosT);
+						real sinI = sqrt(1 - pow(cosI, 2));
+						Vector3 m = (hitrec.n * cosI - r.d) / sinI;
+						real sinT = (obj->m.ni * sinI) / obj->m.nt;
 
-			//Dos slides
-			//real cosT = sqrt(1 - pow(sinT, 2));
-			//Vector3 t = m * sinT - hitrec.n * cosT;
+						real n = obj->m.ni / obj->m.nt;
+						real sinT2 = n * n * (1.0 - cosI * cosI);
+						if (sinT2 > 1.0)
+							break; //Invalido
+						real cosT = sqrt(1 - sinT2);
+						Vector3 t = r.d* n + hitrec.n*(n * cosI - cosT);
 
-			Ray newRay(hitrec.p, t);
-			refractedColor += traceRefractionRay(newRay, newRay);
-			}
-			else {
-			Ray newRay(hitrec.p, r.d);
-			refractedColor += traceRefractionRay(newRay, newRay);
-			}
+						//Dos slides
+						//real cosT = sqrt(1 - pow(sinT, 2));
+						//Vector3 t = m * sinT - hitrec.n * cosT;
 
-			remainingRefractions--;
+						Ray newRay(hitrec.p - hitrec.n / 20.0, t);
+						refractedColor += traceRefractionRay(newRay, newRay);
+						//refractedColor += traceRay(newRay);
+					}
+					else {
+						Ray newRay(hitrec.p + hitrec.n / 20.0, r.d);
+						refractedColor += traceRefractionRay(newRay, newRay);
+						//refractedColor += traceRay(newRay);
+					}
+
+					remainingRefractions--;
 			}
 			refractedColor = refractedColor / 4;
-			*/
+
 
 			//Diffuse lighting
 			real diffuseDot = MAX(0, hitrec.n.normalize().dot(l));
@@ -129,27 +130,17 @@ Color Scene::traceRay(const Ray &r)
 			real specularDot = 0.0;
 			if (diffuseDot > 0.0) {
 				//Specular lighting
-				Vector3 viewDir = (-r.d).normalize();  //N      //correto???    v = ray.inverso
+				Vector3 viewDir = (-r.d).normalize();  //N     v = ray.inverso
 				Vector3 halfDir = (l + viewDir).normalize(); //H
 				real specAngle = MAX(hitrec.n.dot(halfDir), 0.0); //N.H
 				specularDot = pow(specAngle, 64.0); //(N.H)^n
 			}
+
 			finalColor += obj->m.kd * diffuseDot + obj->m.ks * specularDot + obj->m.kt*refractedColor;
 		}
 
-		//Verificar se o raio que sai de hitrec.p até à fonte de luz intersecta outro objeto
-		//Samplelight pode retornar um ray (origem e direcçao) para podermos saber a distancia entre a luz e  ponto de intersecao
-		//cena recebe esse raio, normaliza
-
-		return  obj->m.ka + finalColor; // + kt*Ot (componente de refracçao)
+		return  obj->m.ka + finalColor; 
 	}
-
-	//Implementear shadows aqui
-	/*
-	Existe uma primeira intersecao onde se calcula tendo em conta a luz, enviar um raio de hr.p ate ao outro objeto
-	a sua origem é hr.p e a sua direcçao é luz - intersecçao
-	*/
-	//Ray shadowRay(hitrec.p, );
 
 	return background;
 }

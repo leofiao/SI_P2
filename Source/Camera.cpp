@@ -60,7 +60,7 @@ void Camera::capture(Scene &s)
 			Ray r(eye, to);
 			Color centerColor = s.traceRay(r);
 
-			Color averageColor = (calcAverageColor(s, pixel, dx, dy) + centerColor) / 2;
+			Color averageColor = (calcAverageColor(s, pixel, dx, dy) + centerColor*(1.0 / 9.0));
 
 			//std::cout << averageColor.r << ", " << averageColor.g << ", " << averageColor.b << std::endl;
 			sensor->addSample(i, j, averageColor);
@@ -132,7 +132,7 @@ Color Camera::calcAverageColor(Scene &s, Vector3 pixel, Vector3 dx, Vector3 dy) 
 	Ray rlm(eye, to_lm);
 	Color clm = s.traceRay(rlm);
 
-	Color averageColor = (ctl + ctr + cbl + cbr + ctm + crm + cbm + clm) / 8;
+	Color averageColor = (ctl + ctr + cbl + cbr + ctm + crm + cbm + clm) / 9.0;
 
 	return averageColor;
 }
